@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能旅游规划</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-section h1 {
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .feature-card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background-color: white;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        
+        .feature-card .card-body {
+            padding: 30px;
+        }
+        
+        .feature-card .card-title {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .feature-card .card-text {
+            color: #7f8c8d;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-success {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        #travelForm {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        #resultContainer {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        #panoramaView {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="display-4 mb-4">智能旅游规划</h1>
+            <p class="lead mb-5">为您量身定制的旅行体验</p>
+            <a href="#travelForm" class="btn btn-primary btn-lg px-4 py-2">
+                <i class="bi bi-compass me-2"></i>开始规划
+            </a>
+        </div>
+    </div>
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">个性化路线规划</h5>
+                        <p class="card-text">根据您的偏好、预算和时间，生成最适合您的旅行路线。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">虚拟旅游体验</h5>
+                        <p class="card-text">通过360度全景图片和视频，提前感受目的地魅力。</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">智能攻略生成</h5>
+                        <p class="card-text">回答您的旅行问题，提供详细建议和实用信息。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="bi bi-geo-alt me-2"></i>开始规划您的旅程</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="travelForm">
+                            <div class="mb-4">
+                                <label for="destination" class="form-label fw-bold"><i class="bi bi-pin-map me-2"></i>目的地</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                    <input type="text" class="form-control" id="destination" placeholder="输入您想去的城市或景点" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="days" class="form-label fw-bold"><i class="bi bi-calendar3 me-2"></i>旅行天数</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">天</span>
+                                        <input type="number" class="form-control" id="days" min="1" placeholder="1" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="budget" class="form-label fw-bold"><i class="bi bi-currency-yen me-2"></i>预算</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">¥</span>
+                                        <input type="number" class="form-control" id="budget" min="0" placeholder="5000" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="interests" class="form-label fw-bold"><i class="bi bi-heart me-2"></i>兴趣爱好</label>
+                                <select class="form-select" id="interests" multiple>
+                                    <option value="food"><i class="bi bi-egg-fried me-2"></i>美食</option>
+                                    <option value="culture"><i class="bi bi-building me-2"></i>文化</option>
+                                    <option value="nature"><i class="bi bi-tree me-2"></i>自然风光</option>
+                                    <option value="shopping"><i class="bi bi-bag me-2"></i>购物</option>
+                                </select>
+                                <small class="text-muted">按住Ctrl键可多选</small>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-magic me-2"></i>生成路线
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-10">
+                <div id="resultContainer" class="d-none">
+                    <h2 class="text-center mb-4">您的定制路线</h2>
+                    <div id="travelPlan" class="p-4 bg-white rounded shadow-sm"></div>
+                    <div id="panoramaView" class="mt-4 d-none">
+                        <h3 class="text-center">360度全景预览</h3>
+                        <div class="ratio ratio-16x9">
+                            <iframe id="panoramaFrame" src="" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+<script>
+    // 360度全景图片库初始化
+    function initPanoramaViewer(url) {
+        document.getElementById('panoramaFrame').src = url;
+        document.getElementById('panoramaView').classList.remove('d-none');
+    }
+</script>
+</body>
+</html>
